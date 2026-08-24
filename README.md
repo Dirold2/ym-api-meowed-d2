@@ -367,6 +367,27 @@ When using `getBestDownloadUrl()`, codecs are checked in priority order:
 6. HE-AAC
 7. MP3
 
+## Streaming Direct Track Downloads
+
+`api.tracks.streamTrack()` yields direct-download response bytes without buffering the complete track in memory. Obtain a direct URL first, then consume its `Uint8Array` chunks:
+
+```ts
+const trackId = 14329703;
+const downloadInfo = await api.tracks.getTrackDownloadInfo(trackId);
+const source = downloadInfo[0];
+
+if (!source) throw new Error("No download information available");
+
+const directUrl = await api.tracks.getTrackDirectLink(source.downloadInfoUrl);
+const controller = new AbortController();
+
+for await (const chunk of api.tracks.streamTrack(directUrl, controller.signal)) {
+  // Persist or process chunk: Uint8Array
+}
+```
+
+The stream works in Bun and Node.js. Breaking out of the loop or aborting the signal cancels the underlying response body.
+
 ## Examples
 
 See the [examples directory](./example/) for detailed usage examples:

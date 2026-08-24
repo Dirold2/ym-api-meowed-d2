@@ -38,8 +38,11 @@ export class DeviceAuthApi {
 
     const json = await this.httpClient.post<Record<string, unknown>>(
       "https://oauth.yandex.ru/device/code",
-      "json",
-      body,
+      body.toString(),
+      {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        responseType: "json",
+      },
     );
 
     if (json.error) {
@@ -79,8 +82,11 @@ export class DeviceAuthApi {
 
     const json = await this.httpClient.post<Record<string, unknown>>(
       "https://oauth.yandex.ru/token",
-      "json",
-      body,
+      body.toString(),
+      {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        responseType: "json",
+      },
     );
 
     if (json.error === "authorization_pending") return null;

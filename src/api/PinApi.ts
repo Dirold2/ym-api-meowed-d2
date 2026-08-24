@@ -11,6 +11,6 @@ export class PinApi {
    * @returns Promise with pinned items.
    */
   getPins(): Promise<Pin[]> {
-    return this.ctx.get(this.ctx.createRequest("/pins"));
+    return this.ctx.getApi("/pins");
   }
 }

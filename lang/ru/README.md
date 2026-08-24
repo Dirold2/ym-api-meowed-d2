@@ -97,6 +97,7 @@ const api = new YMApi();
 - `getTrackDownloadInfo(trackId, quality?, canUseStreaming?)` — Информация о загрузке
 - `getTrackDownloadInfoNew(trackId, quality?, codecs?, transport?)` — Новый endpoint
 - `getTrackDirectLink(downloadUrl, short?)` — Прямая ссылка
+- `streamTrack(trackUrl, signal?)` — Потоковое скачивание байтов трека без полной буферизации
 - `getTrackDirectLinkNew(trackUrl)` — Прямая ссылка (новый формат)
 - `getTrackShareLink(track)` — Ссылка для шаринга
 - `getSimilarTracks(trackId)` — Похожие треки
@@ -282,6 +283,27 @@ try {
   }
 }
 ```
+
+## Потоковое скачивание трека
+
+`api.tracks.streamTrack()` выдаёт байты direct-download ответа без буферизации трека целиком в памяти. Сначала получите прямую ссылку, затем обрабатывайте чанки `Uint8Array`:
+
+```ts
+const trackId = 14329703;
+const downloadInfo = await api.tracks.getTrackDownloadInfo(trackId);
+const source = downloadInfo[0];
+
+if (!source) throw new Error("Информация для скачивания недоступна");
+
+const directUrl = await api.tracks.getTrackDirectLink(source.downloadInfoUrl);
+const controller = new AbortController();
+
+for await (const chunk of api.tracks.streamTrack(directUrl, controller.signal)) {
+  // Сохраните или обработайте chunk: Uint8Array
+}
+```
+
+Поток работает в Bun и Node.js. Выход из цикла или отмена сигнала освобождают тело исходного ответа.
 
 ## Особенности
 

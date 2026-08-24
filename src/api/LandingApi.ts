@@ -19,7 +19,7 @@ export class LandingApi {
    * @returns Promise with chart.
    */
   getChart(chartType: ChartType): Promise<ChartTracksResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/landing3/chart/${chartType}`));
+    return this.ctx.getApi(`/landing3/chart/${chartType}`);
   }
 
   /**
@@ -29,7 +29,7 @@ export class LandingApi {
    * @returns Promise with new playlists.
    */
   getNewPlaylists(): Promise<NewPlaylistsResponse> {
-    return this.ctx.get(this.ctx.createRequest("/landing3/new-playlists"));
+    return this.ctx.getApi("/landing3/new-playlists");
   }
 
   /**
@@ -39,7 +39,7 @@ export class LandingApi {
    * @returns Promise with new releases.
    */
   getNewReleases(): Promise<NewReleasesResponse> {
-    return this.ctx.get(this.ctx.createRequest("/landing3/new-releases"));
+    return this.ctx.getApi("/landing3/new-releases");
   }
 
   /**
@@ -49,7 +49,7 @@ export class LandingApi {
    * @returns Promise with podcasts.
    */
   getPodcasts(): Promise<PodcastsResponse> {
-    return this.ctx.get(this.ctx.createRequest("/landing3/podcasts"));
+    return this.ctx.getApi("/landing3/podcasts");
   }
 
   /**
@@ -59,6 +59,6 @@ export class LandingApi {
    * @returns Promise with genres.
    */
   getGenres(): Promise<GetGenresResponse> {
-    return this.ctx.get(this.ctx.createRequest("/genres"));
+    return this.ctx.getApi("/genres");
   }
 }

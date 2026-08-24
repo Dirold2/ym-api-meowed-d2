@@ -33,7 +33,7 @@ export class TrackApi {
    * @returns Promise with an array of tracks.
    */
   getTrack(trackId: TrackId): Promise<GetTrackResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}`), "json");
+    return this.ctx.getApi(`/tracks/${trackId}`);
   }
 
   /**
@@ -70,7 +70,7 @@ export class TrackApi {
    * @returns Promise with supplement.
    */
   getTrackSupplement(trackId: TrackId): Promise<GetTrackSupplementResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/supplement`));
+    return this.ctx.getApi(`/tracks/${trackId}/supplement`);
   }
 
   /**
@@ -81,7 +81,7 @@ export class TrackApi {
    * @returns Promise with similar tracks.
    */
   getSimilarTracks(trackId: TrackId): Promise<SimilarTracksResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/similar`));
+    return this.ctx.getApi(`/tracks/${trackId}/similar`);
   }
 
   /**
@@ -93,7 +93,7 @@ export class TrackApi {
    * @returns Promise with lyrics.
    */
   getTrackLyrics(trackId: TrackId, format = "TEXT"): Promise<TrackLyrics> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/lyrics`).addQuery({ format }));
+    return this.ctx.getApi(`/tracks/${trackId}/lyrics`, { query: { format } });
   }
 
   /**
@@ -104,7 +104,7 @@ export class TrackApi {
    * @returns Promise with trailer.
    */
   getTrackTrailer(trackId: TrackId): Promise<TrackTrailer> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/trailer`));
+    return this.ctx.getApi(`/tracks/${trackId}/trailer`);
   }
 
   /**
@@ -115,7 +115,7 @@ export class TrackApi {
    * @returns Promise with full info.
    */
   getTrackFullInfo(trackId: TrackId): Promise<TrackFullInfo> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/full-info`));
+    return this.ctx.getApi(`/tracks/${trackId}/full-info`);
   }
 
   /**
@@ -191,9 +191,44 @@ export class TrackApi {
    * @param short  Shorten link via clck.ru.
    * @returns Promise with direct link.
    */
+  /**
+   * @ru Потоково скачивает трек без буферизации всего файла в памяти.
+   * @en Streams a track without buffering the entire file in memory.
+   */
+  async *streamTrack(trackUrl: string, signal?: AbortSignal): AsyncGenerator<Uint8Array> {
+    const response = await this.ctx.httpClient.stream(trackUrl, undefined, signal);
+
+    if (!response.ok) {
+      throw new Error(`Track download failed: HTTP ${response.status}`);
+    }
+
+    if (!(response.data instanceof ReadableStream)) {
+      throw new Error("Track download response body is not a ReadableStream");
+    }
+
+    const reader = response.data.getReader();
+    let completed = false;
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          completed = true;
+          return;
+        }
+        yield value instanceof Uint8Array ? value : new Uint8Array(value);
+      }
+    } finally {
+      if (!completed) {
+        await reader.cancel();
+      }
+      reader.releaseLock();
+    }
+  }
+
   async getTrackDirectLink(trackDownloadUrl: string, short = false): Promise<string> {
     const request = directLinkRequest(trackDownloadUrl);
-    const rawResponse = await this.ctx.httpClient.get<any>(request, "xml");
+    const rawResponse = await this.ctx.getRaw<any>(request, "xml");
 
     const downloadInfo = rawResponse["download-info"];
     if (!downloadInfo) throw new DownloadInfoError("Download info missing in response");

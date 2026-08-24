@@ -81,7 +81,6 @@ export class PlaylistApi {
         mixed: String(options.mixed ?? false),
         "rich-tracks": String(options["rich-tracks"] ?? false),
       }),
-      "xml",
     );
   }
 
@@ -183,7 +182,6 @@ export class PlaylistApi {
         .createRequest(`/users/${this.ctx.user.uid}/playlists/${playlistId}/change-relative`)
         .addHeaders({ "content-type": "application/x-www-form-urlencoded" })
         .setBodyData(body),
-      "xml",
     );
   }
 
@@ -330,9 +328,8 @@ export class PlaylistApi {
    * @param userId  User ID.
    * @returns Promise with settings.
    */
-  getUserSettings(userId: UserIdParam = null): Promise<UserSettings> {
-    const uid = this.ctx.resolveUserId(userId);
-    return this.ctx.get(this.ctx.createRequest(`/users/${uid}/settings`));
+  getUserSettings(_userId: UserIdParam = null): Promise<UserSettings> {
+    return this.ctx.get(this.ctx.createRequest("/account/settings"));
   }
 
   /**

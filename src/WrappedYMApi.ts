@@ -96,10 +96,10 @@ export default class WrappedYMApi {
 
   private getTrackId(track: TrackUrl | TrackId): TrackId {
     if (typeof track !== "string") return track;
-    const extracted = this.urlExtractor.extractId<number>(track, "track", "yandex");
+    const extracted = this.urlExtractor.extractId(track, "track", "yandex");
     const id = extracted.id ?? extracted.trackId;
     if (id === undefined) throw new ExtractionError("trackId", track);
-    return id;
+    return Number(id);
   }
 
   private getAlbumId(album: AlbumId | AlbumUrl): AlbumId {
@@ -128,7 +128,7 @@ export default class WrappedYMApi {
 
     if ("id" in extracted) {
       return {
-        id: extracted.id,
+        id: Number(extracted.id),
         user: extracted.user ? String(extracted.user) : null,
       };
     }

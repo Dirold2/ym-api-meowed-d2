@@ -20,7 +20,7 @@ export class AlbumApi {
    */
   getAlbum(albumId: AlbumId, withTracks = false): Promise<Album | AlbumWithTracks> {
     const path = withTracks ? `/albums/${albumId}/with-tracks` : `/albums/${albumId}`;
-    return this.ctx.get(this.ctx.createRequest(path));
+    return this.ctx.getApi(path);
   }
 
   /**
@@ -55,7 +55,7 @@ export class AlbumApi {
    * @returns Promise with similar entities.
    */
   getAlbumSimilarEntities(albumId: AlbumId): Promise<AlbumSimilarEntities> {
-    return this.ctx.get(this.ctx.createRequest(`/albums/${albumId}/similar-entities`));
+    return this.ctx.getApi(`/albums/${albumId}/similar-entities`);
   }
 
   /**
@@ -66,6 +66,6 @@ export class AlbumApi {
    * @returns Promise with album trailer.
    */
   getAlbumTrailer(albumId: AlbumId): Promise<AlbumTrailer> {
-    return this.ctx.get(this.ctx.createRequest(`/albums/${albumId}/trailer`));
+    return this.ctx.getApi(`/albums/${albumId}/trailer`);
   }
 }

@@ -11,7 +11,7 @@ export class AccountApi {
    * @returns Promise with account status.
    */
   getAccountStatus(): Promise<GetAccountStatusResponse> {
-    return this.ctx.get(this.ctx.createRequest("/account/status"));
+    return this.ctx.getApi("/account/status");
   }
 
   /**
@@ -21,6 +21,6 @@ export class AccountApi {
    * @returns Promise with user feed.
    */
   getFeed(): Promise<GetFeedResponse> {
-    return this.ctx.get(this.ctx.createRequest("/feed"));
+    return this.ctx.getApi("/feed");
   }
 }

@@ -12,7 +12,7 @@ export class DisclaimerApi {
    * @returns Promise with disclaimer.
    */
   getTrackDisclaimer(trackId: number | string): Promise<Disclaimer> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/disclaimer`));
+    return this.ctx.getApi(`/tracks/${trackId}/disclaimer`);
   }
 
   /**
@@ -23,7 +23,7 @@ export class DisclaimerApi {
    * @returns Promise with disclaimer.
    */
   getAlbumDisclaimer(albumId: number | string): Promise<Disclaimer> {
-    return this.ctx.get(this.ctx.createRequest(`/albums/${albumId}/disclaimer`));
+    return this.ctx.getApi(`/albums/${albumId}/disclaimer`);
   }
 
   /**
@@ -34,7 +34,7 @@ export class DisclaimerApi {
    * @returns Promise with disclaimer.
    */
   getArtistDisclaimer(artistId: number | string): Promise<Disclaimer> {
-    return this.ctx.get(this.ctx.createRequest(`/artists/${artistId}/disclaimer`));
+    return this.ctx.getApi(`/artists/${artistId}/disclaimer`);
   }
 
   /**
@@ -45,6 +45,6 @@ export class DisclaimerApi {
    * @returns Promise with disclaimer.
    */
   getClipDisclaimer(clipId: number | string): Promise<Disclaimer> {
-    return this.ctx.get(this.ctx.createRequest(`/clips/${clipId}/disclaimer`));
+    return this.ctx.getApi(`/clips/${clipId}/disclaimer`);
   }
 }

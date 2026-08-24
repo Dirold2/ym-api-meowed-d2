@@ -13,11 +13,11 @@ export class MusicHistoryApi {
    * @returns Promise with history.
    */
   getMusicHistory(page = 0, pageSize = 50): Promise<MusicHistoryResponse> {
-    return this.ctx.getRaw(
-      this.ctx.createRequest("/music-history").addQuery({
+    return this.ctx.getApiRaw("/music-history", {
+      query: {
         page: String(page),
         pageSize: String(pageSize),
-      }),
-    );
+      },
+    });
   }
 }

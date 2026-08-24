@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.5.0] — 2026-08-25
+
+### Added
+
+- `TrackApi.streamTrack()` streams a direct track download as `AsyncGenerator<Uint8Array>` without buffering the full file.
+
+### Changed
+
+- Updated `hyperttp` to `^0.5.2` and Bun/Undici transports to `^0.3.1`.
+- Default API client now uses Hyperttp `baseURL`; relative API paths and query parameters are passed directly to the client.
+- Bun transport bypasses response-cache reads and writes for streaming requests.
+- Undici transport normalizes uncompressed Node `Readable` bodies to Web `ReadableStream<Uint8Array>`.
+
+### Fixed
+
+- Cancelling `streamTrack()` early now cancels and unlocks the response reader.
+- Wrapped playlist URLs with numeric IDs now use the user playlist endpoint instead of the UUID playlist endpoint.
+- Wrapped track URL IDs are converted to numeric IDs after URL extraction.
+
 ## [1.4.0] — 2026-06-23
 
 ### Added

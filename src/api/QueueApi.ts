@@ -22,6 +22,6 @@ export class QueueApi {
    * @returns Promise with queue.
    */
   getQueue(queueId: string): Promise<QueueResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/queues/${queueId}`));
+    return this.ctx.getApi(`/queues/${queueId}`);
   }
 }

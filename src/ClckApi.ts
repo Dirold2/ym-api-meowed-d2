@@ -14,5 +14,5 @@ export default function shortenLink(
   client: HyperClient = defaultClient,
 ): Promise<string> {
   const request = clckApiRequest().setPath("/--").addQuery({ url: URL });
-  return client.get(request) as Promise<string>;
+  return client.get(request.url, { headers: request.headers }) as Promise<string>;
 }

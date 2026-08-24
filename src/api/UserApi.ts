@@ -41,7 +41,8 @@ export class UserApi {
     return this.ctx.post(
       this.ctx
         .createRequest(`/users/${uid}/likes/tracks/add-multiple`)
-        .setBodyData({ "track-ids": trackIds.join(",") }),
+        .addHeaders({ "content-type": "application/x-www-form-urlencoded" })
+        .setBodyData(new URLSearchParams({ trackIds: trackIds.join(",") })),
     );
   }
 
@@ -61,7 +62,8 @@ export class UserApi {
     return this.ctx.post(
       this.ctx
         .createRequest(`/users/${uid}/likes/tracks/remove`)
-        .setBodyData({ "track-ids": trackIds.join(",") }),
+        .addHeaders({ "content-type": "application/x-www-form-urlencoded" })
+        .setBodyData(new URLSearchParams({ trackIds: trackIds.join(",") })),
     );
   }
 
@@ -290,7 +292,8 @@ export class UserApi {
     return this.ctx.post(
       this.ctx
         .createRequest(`/users/${uid}/dislikes/tracks/add-multiple`)
-        .setBodyData({ "track-ids": trackIds.join(",") }),
+        .addHeaders({ "content-type": "application/x-www-form-urlencoded" })
+        .setBodyData(new URLSearchParams({ trackIds: trackIds.join(",") })),
     );
   }
 
@@ -310,7 +313,8 @@ export class UserApi {
     return this.ctx.post(
       this.ctx
         .createRequest(`/users/${uid}/dislikes/tracks/remove`)
-        .setBodyData({ "track-ids": trackIds.join(",") }),
+        .addHeaders({ "content-type": "application/x-www-form-urlencoded" })
+        .setBodyData(new URLSearchParams({ trackIds: trackIds.join(",") })),
     );
   }
 

@@ -12,7 +12,7 @@ export class CreditApi {
    * @returns Promise with credits.
    */
   getTrackCredits(trackId: number | string): Promise<CreditsResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/tracks/${trackId}/credits`));
+    return this.ctx.getApi(`/tracks/${trackId}/credits`);
   }
 
   /**
@@ -23,6 +23,6 @@ export class CreditApi {
    * @returns Promise with credits.
    */
   getClipCredits(clipId: number | string): Promise<CreditsResponse> {
-    return this.ctx.get(this.ctx.createRequest(`/clips/${clipId}/credits`));
+    return this.ctx.getApi(`/clips/${clipId}/credits`);
   }
 }
