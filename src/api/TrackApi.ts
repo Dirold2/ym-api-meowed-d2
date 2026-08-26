@@ -184,14 +184,6 @@ export class TrackApi {
   }
 
   /**
-   * GET: download URL
-   * @ru Получить прямую ссылку на скачивание трека.
-   * @en Get a direct download link for a track.
-   * @param trackDownloadUrl  Download URL from getTrackDownloadInfo.
-   * @param short  Shorten link via clck.ru.
-   * @returns Promise with direct link.
-   */
-  /**
    * @ru Потоково скачивает трек без буферизации всего файла в памяти.
    * @en Streams a track without buffering the entire file in memory.
    */
@@ -226,6 +218,14 @@ export class TrackApi {
     }
   }
 
+  /**
+   * GET: download URL
+   * @ru Получить прямую ссылку на скачивание трека.
+   * @en Get a direct download link for a track.
+   * @param trackDownloadUrl  Download URL from getTrackDownloadInfo.
+   * @param short  Shorten link via clck.ru.
+   * @returns Promise with direct link.
+   */
   async getTrackDirectLink(trackDownloadUrl: string, short = false): Promise<string> {
     const request = directLinkRequest(trackDownloadUrl);
     const rawResponse = await this.ctx.getRaw<any>(request, "xml");

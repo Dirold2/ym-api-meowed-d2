@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.1] — 2026-08-27
+
+### Changed
+
+- Updated `hyperttp` to `^0.5.4` and Bun/Undici transports to `^0.3.2`.
+
 ## [1.5.0] — 2026-08-25
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "yamd2",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A Node.js wrapper for the Yandex.Music API (Unofficial) http://music.yandex.ru",
   "type": "module",
   "main": "dist/index.js",
@@ -26,12 +26,12 @@
     "yandex.music"
   ],
   "dependencies": {
-    "@hyperttp/transport-bun": "^0.3.1",
-    "@hyperttp/transport-undici": "^0.3.1",
+    "@hyperttp/transport-bun": "^0.3.2",
+    "@hyperttp/transport-undici": "^0.3.2",
     "@hyperttp/types": "^0.3.0",
     "chalk": "^6.0.0",
     "crypto": "^1.0.1",
-    "hyperttp": "^0.5.2"
+    "hyperttp": "^0.5.4"
   },
   "devDependencies": {
     "@dirold2/dev-tools": "^1.1.3",
