@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.2] — 2026-08-27
+
+### Changed
+
+- Updated `hyperttp` to `^0.5.5`.
+
 ## [1.5.1] — 2026-08-27
 
 ### Changed
